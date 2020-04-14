@@ -1,6 +1,8 @@
 # BooleanSelectionView
 Android widget to use for Boolean selection like Gender, Martial status, On Off...etc
+
 <img src="https://raw.githubusercontent.com/mutasemhajhasan/BooleanSelectionView/master/demo.gif" />
+
 # Usage
 ## Gradle
 ```gradle
