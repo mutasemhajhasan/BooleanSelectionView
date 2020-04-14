@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -21,6 +22,7 @@ public class BooleanSelectionView extends RadioGroup {
 
     private RadioButton viewStart, viewEnd;
     private RadioGroup root;
+    private SelectionListener selectionListener;
 
     public BooleanSelectionView(Context context) {
         super(context);
@@ -81,24 +83,45 @@ public class BooleanSelectionView extends RadioGroup {
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     Drawable startBg = viewStart.getBackground();
                     Drawable startWrappedDrawable = DrawableCompat.wrap(startBg);
-                    if (viewStart.isChecked())
-                        DrawableCompat.setTint(startWrappedDrawable, selectedColor);
-                    else
-                        DrawableCompat.setTint(startWrappedDrawable, unSelectedColor);
-                }
-            });
-            viewEnd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     Drawable endBg = viewEnd.getBackground();
                     Drawable endWrappedDrawable = DrawableCompat.wrap(endBg);
-                    if (viewEnd.isChecked())
-                        DrawableCompat.setTint(endWrappedDrawable, selectedColor);
-                    else
+                    if (viewStart.isChecked()) {
+                        DrawableCompat.setTint(startWrappedDrawable, selectedColor);
                         DrawableCompat.setTint(endWrappedDrawable, unSelectedColor);
+                        if (selectionListener != null)
+                            selectionListener.onSelectionChanged(Selection.Start, viewStart.getText() != null ? viewStart.getText().toString() : "");
+                    } else {
+                        DrawableCompat.setTint(startWrappedDrawable, unSelectedColor);
+                        DrawableCompat.setTint(endWrappedDrawable, selectedColor);
+                        if (selectionListener != null)
+                            selectionListener.onSelectionChanged(Selection.End, viewEnd.getText() != null ? viewEnd.getText().toString() : "");
+                    }
                 }
             });
+
         }
     }
 
+    public int getSelection() {
+        if (viewStart.isChecked())
+            return Selection.Start;
+        else
+            return Selection.End;
+    }
+
+    public SelectionListener getSelectionListener() {
+        return selectionListener;
+    }
+
+    public void setSelectionListener(SelectionListener selectionListener) {
+        this.selectionListener = selectionListener;
+    }
+
+    public static class Selection {
+        public static final int Start = 0, End = 1;
+    }
+
+    public interface SelectionListener {
+        void onSelectionChanged(int selectionIndex, String selectedText);
+    }
 }
