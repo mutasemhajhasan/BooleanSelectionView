@@ -13,7 +13,7 @@ allprojects {
 	}
 }
 dependencies {
-	  implementation 'com.github.mutasemhajhasan:BooleanSelectionView:1.1.0'
+	  implementation 'com.github.mutasemhajhasan:BooleanSelectionView:1.1.1'
 }
 ```
 ## activity.xml
