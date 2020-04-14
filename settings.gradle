@@ -1,0 +1,3 @@
+rootProject.name='BooleanSelectionExample'
+include ':app'
+include ':booleanselectionview'

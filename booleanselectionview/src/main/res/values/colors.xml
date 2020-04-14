@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="start">#009688</color>
+    <color name="stroke">#009688</color>
+    <color name="stroke_dark">#044741</color>
+    <color name="selectetColor">#009688</color>
+    <color name="textColor">#FFFFFF</color>
+    <color name="unselectedColor">#283132</color>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BooleanSelectorView">
+        <attr name="selectedColor" format="color" />
+        <attr name="unSelectedColor" format="color" />
+        <attr name="textColor" format="color" />
+        <attr name="startText" format="string" />
+        <attr name="endText" format="string" />
+    </declare-styleable>
+</resources>

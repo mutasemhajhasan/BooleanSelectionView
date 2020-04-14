@@ -1,0 +1,36 @@
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="50dp"
+    android:layout_marginRight="50dp"
+    android:background="@drawable/view_bg"
+    android:minHeight="30dp"
+    android:orientation="horizontal">
+
+    <RadioButton
+        android:id="@+id/viewStart"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/start_bg"
+        android:button="@null"
+        android:checked="true"
+        android:gravity="center"
+        android:textStyle="bold"
+
+        />
+
+    <RadioButton
+        android:id="@+id/viewEnd"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/end_bg"
+        android:button="@null"
+        android:gravity="center"
+        android:textStyle="bold"
+
+        />
+</RadioGroup>
+
