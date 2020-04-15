@@ -88,7 +88,7 @@ BooleanSelectionView gender, martial, onOff;
         gender.setSelectionListener(new BooleanSelectionView.SelectionListener() {
             @Override
             public void onSelectionChanged(int selection, String selectedText) {
-                //selection is one of:
+                //selection is one off:
                 // (BooleanSelectionView.Selection.None, BooleanSelectionView.Selection.End, BooleanSelectionView.Selection.Start)
                 Toast.makeText(MainActivity.this, selectedText, Toast.LENGTH_SHORT).show();
             }
@@ -106,7 +106,7 @@ BooleanSelectionView gender, martial, onOff;
             }
         });
         // you could use the getSelection() to get the current selection
-        // the return value is one of :
+        // the return value is one off :
         // (BooleanSelectionView.Selection.None, BooleanSelectionView.Selection.End, BooleanSelectionView.Selection.Start)
     }
  ```
