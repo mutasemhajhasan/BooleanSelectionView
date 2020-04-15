@@ -12,20 +12,21 @@
         android:id="@+id/viewStart"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="10"
         android:background="@drawable/start_bg"
         android:button="@null"
-        android:checked="true"
+
         android:gravity="center"
         android:textStyle="bold"
 
         />
 
+
     <RadioButton
         android:id="@+id/viewEnd"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="10"
         android:background="@drawable/end_bg"
         android:button="@null"
         android:gravity="center"

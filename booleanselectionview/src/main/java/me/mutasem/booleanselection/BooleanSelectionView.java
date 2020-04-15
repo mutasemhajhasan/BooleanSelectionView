@@ -20,7 +20,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
 public class BooleanSelectionView extends RadioGroup {
-    private int selection = Selection.Start;
+    private int selection = Selection.None;
     private RadioButton viewStart, viewEnd;
     private RadioGroup root;
     private SelectionListener selectionListener;
@@ -49,7 +49,7 @@ public class BooleanSelectionView extends RadioGroup {
             startText = a.getString(R.styleable.BooleanSelectorView_startText);
             endText = a.getString(R.styleable.BooleanSelectorView_endText);
             if (a.hasValue(R.styleable.BooleanSelectorView_selection))
-                selection = a.getInteger(R.styleable.BooleanSelectorView_selection, Selection.Start);
+                selection = a.getInteger(R.styleable.BooleanSelectorView_selection, Selection.None);
 
             root = findViewById(R.id.root);
             //setting the margin
@@ -65,7 +65,7 @@ public class BooleanSelectionView extends RadioGroup {
             //setting default selection
             if (selection == Selection.Start)
                 viewStart.setChecked(true);
-            else
+            else if (selection == Selection.End)
                 viewEnd.setChecked(true);
             //setting the view background color
             Drawable rootBg = root.getBackground();
@@ -73,14 +73,14 @@ public class BooleanSelectionView extends RadioGroup {
             DrawableCompat.setTint(rootWrappedDrawable, unSelectedColor);
             //setting the initial BG for left button
             Drawable startBg = viewStart.getBackground();
-            Drawable startWrappedDrawable = DrawableCompat.wrap(startBg);
+            final Drawable startWrappedDrawable = DrawableCompat.wrap(startBg);
             if (viewStart.isChecked())
                 DrawableCompat.setTint(startWrappedDrawable, selectedColor);
             else
                 DrawableCompat.setTint(startWrappedDrawable, unSelectedColor);
             //setting the initial BG for right button
             Drawable endBg = viewEnd.getBackground();
-            Drawable endWrappedDrawable = DrawableCompat.wrap(endBg);
+            final Drawable endWrappedDrawable = DrawableCompat.wrap(endBg);
             if (viewEnd.isChecked())
                 DrawableCompat.setTint(endWrappedDrawable, selectedColor);
             else
@@ -89,20 +89,24 @@ public class BooleanSelectionView extends RadioGroup {
             viewStart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    Drawable startBg = viewStart.getBackground();
-                    Drawable startWrappedDrawable = DrawableCompat.wrap(startBg);
-                    Drawable endBg = viewEnd.getBackground();
-                    Drawable endWrappedDrawable = DrawableCompat.wrap(endBg);
                     if (viewStart.isChecked()) {
                         DrawableCompat.setTint(startWrappedDrawable, selectedColor);
-                        DrawableCompat.setTint(endWrappedDrawable, unSelectedColor);
                         if (selectionListener != null)
                             selectionListener.onSelectionChanged(Selection.Start, viewStart.getText() != null ? viewStart.getText().toString() : "");
                     } else {
                         DrawableCompat.setTint(startWrappedDrawable, unSelectedColor);
-                        DrawableCompat.setTint(endWrappedDrawable, selectedColor);
                         if (selectionListener != null)
                             selectionListener.onSelectionChanged(Selection.End, viewEnd.getText() != null ? viewEnd.getText().toString() : "");
+                    }
+                }
+            });
+            viewEnd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (viewEnd.isChecked()) {
+                        DrawableCompat.setTint(endWrappedDrawable, selectedColor);
+                    } else {
+                        DrawableCompat.setTint(endWrappedDrawable, unSelectedColor);
                     }
                 }
             });
@@ -120,14 +124,15 @@ public class BooleanSelectionView extends RadioGroup {
     public int getSelection() {
         if (viewStart.isChecked())
             return Selection.Start;
-        else
+        else if (viewEnd.isChecked())
             return Selection.End;
+        return Selection.None;
     }
 
-    public void setSelection(int selectedIndex) {
-        if (selectedIndex == Selection.Start)
+    public void setSelection(int s) {
+        if (s == Selection.Start)
             viewStart.setChecked(true);
-        else
+        else if (s == Selection.End)
             viewEnd.setChecked(true);
     }
 
@@ -140,10 +145,10 @@ public class BooleanSelectionView extends RadioGroup {
     }
 
     public static class Selection {
-        public static final int Start = 1, End = 2;
+        public static final int None = 0, Start = 1, End = 2;
     }
 
     public interface SelectionListener {
-        void onSelectionChanged(int selectionIndex, String selectedText);
+        void onSelectionChanged(int selection, String selectedText);
     }
 }
