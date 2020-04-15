@@ -84,29 +84,30 @@ BooleanSelectionView gender, martial, onOff;
         gender = findViewById(R.id.gender);
         martial = findViewById(R.id.martial);
         onOff = findViewById(R.id.onOff);
+        gender.setSelection(BooleanSelectionView.Selection.End);
         gender.setSelectionListener(new BooleanSelectionView.SelectionListener() {
             @Override
-            public void onSelectionChanged(int selectionIndex, String selectedText) {
-                //selection index is one of tow values:
-                // (BooleanSelectionView.Selection.End or BooleanSelectionView.Selection.Start)
+            public void onSelectionChanged(int selection, String selectedText) {
+                //selection is one of:
+                // (BooleanSelectionView.Selection.None, BooleanSelectionView.Selection.End, BooleanSelectionView.Selection.Start)
                 Toast.makeText(MainActivity.this, selectedText, Toast.LENGTH_SHORT).show();
             }
         });
         martial.setSelectionListener(new BooleanSelectionView.SelectionListener() {
             @Override
-            public void onSelectionChanged(int selectionIndex, String selectedText) {
+            public void onSelectionChanged(int selection, String selectedText) {
                 Toast.makeText(MainActivity.this, selectedText, Toast.LENGTH_SHORT).show();
             }
         });
         onOff.setSelectionListener(new BooleanSelectionView.SelectionListener() {
             @Override
-            public void onSelectionChanged(int selectionIndex, String selectedText) {
+            public void onSelectionChanged(int selection, String selectedText) {
                 Toast.makeText(MainActivity.this, selectedText, Toast.LENGTH_SHORT).show();
             }
         });
         // you could use the getSelection() to get the current selection
-        // the return value is one of tow values:
-        // (BooleanSelectionView.Selection.End or BooleanSelectionView.Selection.Start)
+        // the return value is one of :
+        // (BooleanSelectionView.Selection.None, BooleanSelectionView.Selection.End, BooleanSelectionView.Selection.Start)
     }
  ```
  
