@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
         gender = findViewById(R.id.gender);
         martial = findViewById(R.id.martial);
         onOff = findViewById(R.id.onOff);
+        gender.setSelection(BooleanSelectionView.Selection.End);
         gender.setSelectionListener(new BooleanSelectionView.SelectionListener() {
             @Override
             public void onSelectionChanged(int selectionIndex, String selectedText) {

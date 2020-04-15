@@ -23,6 +23,7 @@
         android:layout_marginTop="50dp"
         app:endText="Female"
         app:selectedColor="#7C4949"
+
         app:startText="Male"
         app:textColor="#FFFFFF"
         app:unSelectedColor="#BA7979" />
@@ -46,6 +47,7 @@
         android:layout_marginTop="50dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        app:selection="end"
         app:endText="On"
         app:selectedColor="#673AB7"
         app:startText="Off"

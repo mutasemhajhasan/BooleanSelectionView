@@ -13,13 +13,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
 public class BooleanSelectionView extends RadioGroup {
-
+    private int selection = Selection.Start;
     private RadioButton viewStart, viewEnd;
     private RadioGroup root;
     private SelectionListener selectionListener;
@@ -47,6 +48,9 @@ public class BooleanSelectionView extends RadioGroup {
             unSelectedColor = a.getColor(R.styleable.BooleanSelectorView_unSelectedColor, ContextCompat.getColor(context, R.color.unselectedColor));
             startText = a.getString(R.styleable.BooleanSelectorView_startText);
             endText = a.getString(R.styleable.BooleanSelectorView_endText);
+            if (a.hasValue(R.styleable.BooleanSelectorView_selection))
+                selection = a.getInteger(R.styleable.BooleanSelectorView_selection, Selection.Start);
+
             root = findViewById(R.id.root);
             //setting the margin
             root.setPadding(getPaddingLeft(), getPaddingTop(), getPaddingRight(), getPaddingBottom());
@@ -58,7 +62,11 @@ public class BooleanSelectionView extends RadioGroup {
             viewEnd.setTextColor(textColor);
             viewStart.setText(startText);
             viewEnd.setText(endText);
-
+            //setting default selection
+            if (selection == Selection.Start)
+                viewStart.setChecked(true);
+            else
+                viewEnd.setChecked(true);
             //setting the view background color
             Drawable rootBg = root.getBackground();
             Drawable rootWrappedDrawable = DrawableCompat.wrap(rootBg);
@@ -98,8 +106,15 @@ public class BooleanSelectionView extends RadioGroup {
                     }
                 }
             });
-
         }
+    }
+
+    public void setStartText(@NonNull String text) {
+        viewStart.setText(text);
+    }
+
+    public void setEndText(@NonNull String text) {
+        viewEnd.setText(text);
     }
 
     public int getSelection() {
@@ -107,6 +122,13 @@ public class BooleanSelectionView extends RadioGroup {
             return Selection.Start;
         else
             return Selection.End;
+    }
+
+    public void setSelection(int selectedIndex) {
+        if (selectedIndex == Selection.Start)
+            viewStart.setChecked(true);
+        else
+            viewEnd.setChecked(true);
     }
 
     public SelectionListener getSelectionListener() {
@@ -118,7 +140,7 @@ public class BooleanSelectionView extends RadioGroup {
     }
 
     public static class Selection {
-        public static final int Start = 0, End = 1;
+        public static final int Start = 1, End = 2;
     }
 
     public interface SelectionListener {
