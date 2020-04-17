@@ -41,75 +41,81 @@ public class BooleanSelectionView extends RadioGroup {
         if (attrs != null) {
             TypedArray a = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.BooleanSelectorView,
                     defStyle, defStyle);
-            final int textColor, selectedColor, unSelectedColor;
-            String startText, endText;
-            textColor = a.getColor(R.styleable.BooleanSelectorView_textColor, ContextCompat.getColor(context, R.color.textColor));
-            selectedColor = a.getColor(R.styleable.BooleanSelectorView_selectedColor, ContextCompat.getColor(context, R.color.selectetColor));
-            unSelectedColor = a.getColor(R.styleable.BooleanSelectorView_unSelectedColor, ContextCompat.getColor(context, R.color.unselectedColor));
-            startText = a.getString(R.styleable.BooleanSelectorView_startText);
-            endText = a.getString(R.styleable.BooleanSelectorView_endText);
-            if (a.hasValue(R.styleable.BooleanSelectorView_selection))
-                selection = a.getInteger(R.styleable.BooleanSelectorView_selection, Selection.None);
+            try {
+                final int textColor, selectedColor, unSelectedColor;
+                String startText, endText;
+                textColor = a.getColor(R.styleable.BooleanSelectorView_textColor, ContextCompat.getColor(context, R.color.textColor));
+                selectedColor = a.getColor(R.styleable.BooleanSelectorView_selectedColor, ContextCompat.getColor(context, R.color.selectetColor));
+                unSelectedColor = a.getColor(R.styleable.BooleanSelectorView_unSelectedColor, ContextCompat.getColor(context, R.color.unselectedColor));
+                startText = a.getString(R.styleable.BooleanSelectorView_startText);
+                endText = a.getString(R.styleable.BooleanSelectorView_endText);
+                if (a.hasValue(R.styleable.BooleanSelectorView_selection))
+                    selection = a.getInteger(R.styleable.BooleanSelectorView_selection, Selection.None);
 
-            root = findViewById(R.id.root);
-            //setting the margin
-            root.setPadding(getPaddingLeft(), getPaddingTop(), getPaddingRight(), getPaddingBottom());
-            //removing the parent margin
-            setPadding(0, 0, 0, 0);
-            viewStart = findViewById(R.id.viewStart);
-            viewEnd = findViewById(R.id.viewEnd);
-            viewStart.setTextColor(textColor);
-            viewEnd.setTextColor(textColor);
-            viewStart.setText(startText);
-            viewEnd.setText(endText);
-            //setting default selection
-            if (selection == Selection.Start)
-                viewStart.setChecked(true);
-            else if (selection == Selection.End)
-                viewEnd.setChecked(true);
-            //setting the view background color
-            Drawable rootBg = root.getBackground();
-            Drawable rootWrappedDrawable = DrawableCompat.wrap(rootBg);
-            DrawableCompat.setTint(rootWrappedDrawable, unSelectedColor);
-            //setting the initial BG for left button
-            Drawable startBg = viewStart.getBackground();
-            final Drawable startWrappedDrawable = DrawableCompat.wrap(startBg);
-            if (viewStart.isChecked())
-                DrawableCompat.setTint(startWrappedDrawable, selectedColor);
-            else
-                DrawableCompat.setTint(startWrappedDrawable, unSelectedColor);
-            //setting the initial BG for right button
-            Drawable endBg = viewEnd.getBackground();
-            final Drawable endWrappedDrawable = DrawableCompat.wrap(endBg);
-            if (viewEnd.isChecked())
-                DrawableCompat.setTint(endWrappedDrawable, selectedColor);
-            else
-                DrawableCompat.setTint(endWrappedDrawable, unSelectedColor);
-            //listen for changes and change the Bg based on those changes
-            viewStart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if (viewStart.isChecked()) {
-                        DrawableCompat.setTint(startWrappedDrawable, selectedColor);
-                        if (selectionListener != null)
-                            selectionListener.onSelectionChanged(Selection.Start, viewStart.getText() != null ? viewStart.getText().toString() : "");
-                    } else {
-                        DrawableCompat.setTint(startWrappedDrawable, unSelectedColor);
-                        if (selectionListener != null)
-                            selectionListener.onSelectionChanged(Selection.End, viewEnd.getText() != null ? viewEnd.getText().toString() : "");
+                root = findViewById(R.id.root);
+                //setting the margin
+                root.setPadding(getPaddingLeft(), getPaddingTop(), getPaddingRight(), getPaddingBottom());
+                //removing the parent margin
+                setPadding(0, 0, 0, 0);
+                viewStart = findViewById(R.id.viewStart);
+                viewEnd = findViewById(R.id.viewEnd);
+                viewStart.setTextColor(textColor);
+                viewEnd.setTextColor(textColor);
+                viewStart.setText(startText);
+                viewEnd.setText(endText);
+                //setting default selection
+                if (selection == Selection.Start)
+                    viewStart.setChecked(true);
+                else if (selection == Selection.End)
+                    viewEnd.setChecked(true);
+                //setting the view background color
+                Drawable rootBg = root.getBackground();
+                Drawable rootWrappedDrawable = DrawableCompat.wrap(rootBg);
+                DrawableCompat.setTint(rootWrappedDrawable, unSelectedColor);
+                //setting the initial BG for left button
+                Drawable startBg = viewStart.getBackground();
+                final Drawable startWrappedDrawable = DrawableCompat.wrap(startBg);
+                if (viewStart.isChecked())
+                    DrawableCompat.setTint(startWrappedDrawable, selectedColor);
+                else
+                    DrawableCompat.setTint(startWrappedDrawable, unSelectedColor);
+                //setting the initial BG for right button
+                Drawable endBg = viewEnd.getBackground();
+                final Drawable endWrappedDrawable = DrawableCompat.wrap(endBg);
+                if (viewEnd.isChecked())
+                    DrawableCompat.setTint(endWrappedDrawable, selectedColor);
+                else
+                    DrawableCompat.setTint(endWrappedDrawable, unSelectedColor);
+                //listen for changes and change the Bg based on those changes
+                viewStart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (viewStart.isChecked()) {
+                            DrawableCompat.setTint(startWrappedDrawable, selectedColor);
+                            if (selectionListener != null)
+                                selectionListener.onSelectionChanged(Selection.Start, viewStart.getText() != null ? viewStart.getText().toString() : "");
+                        } else {
+                            DrawableCompat.setTint(startWrappedDrawable, unSelectedColor);
+                            if (selectionListener != null)
+                                selectionListener.onSelectionChanged(Selection.End, viewEnd.getText() != null ? viewEnd.getText().toString() : "");
+                        }
                     }
-                }
-            });
-            viewEnd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if (viewEnd.isChecked()) {
-                        DrawableCompat.setTint(endWrappedDrawable, selectedColor);
-                    } else {
-                        DrawableCompat.setTint(endWrappedDrawable, unSelectedColor);
+                });
+                viewEnd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (viewEnd.isChecked()) {
+                            DrawableCompat.setTint(endWrappedDrawable, selectedColor);
+                        } else {
+                            DrawableCompat.setTint(endWrappedDrawable, unSelectedColor);
+                        }
                     }
-                }
-            });
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                a.recycle();
+            }
         }
     }
 
